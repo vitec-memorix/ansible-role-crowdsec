@@ -1,0 +1,23 @@
+#
+# {{ ansible_managed }}
+#
+{% if item.name is defined %}
+name: {{ item.name }}
+debug: {{ item.debug | default("false") }}
+filters:
+{% for filter in item.filters %}
+ - {{ filter }}
+{% endfor %}
+decisions:
+{% for decision in item.decisions %}
+ - type: {{ decision.type | default('ban') }}
+   duration: {{ decision.duration | default('4h') }}
+{% endfor %}
+{% endif %}
+#duration_expr: Sprintf('%dh', (GetDecisionsCount(Alert.GetValue()) + 1) * 4)
+# notifications:
+#   - slack_default  # Set the webhook in /etc/crowdsec/notifications/slack.yaml before enabling this.
+#   - splunk_default # Set the splunk url and token in /etc/crowdsec/notifications/splunk.yaml before enabling this.
+#   - http_default   # Set the required http parameters in /etc/crowdsec/notifications/http.yaml before enabling this.
+#   - email_default  # Set the required email parameters in /etc/crowdsec/notifications/email.yaml before enabling this.
+on_success: break

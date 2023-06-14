@@ -1,0 +1,7 @@
+---
+filenames:
+{% for filename in item.filenames %}
+  - {{ filename }}
+{% endfor %}
+labels:
+  type: {{ item.type }}

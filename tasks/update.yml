@@ -1,0 +1,16 @@
+---
+#
+# Update the crowdsec hub index and upgrade
+#
+- name: CS Update - Udate the Crowdsec hub
+  ansible.builtin.command:
+    cmd: "cscli hub update"
+  changed_when: false
+  become: true
+
+- name: CS Update - Upgrade Crowdsec hub
+  ansible.builtin.command:
+    cmd: "cscli hub upgrade"
+  register: hub_upgrade
+  changed_when: false
+  become: true

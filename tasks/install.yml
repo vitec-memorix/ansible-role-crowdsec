@@ -1,0 +1,29 @@
+---
+#
+# Install crowdsec from Debian package
+#
+- name: CS Install - Install prerequisites
+  ansible.builtin.package:
+    update_cache: true
+    name: "{{ cs_packages }}"
+    state: present
+  become: true
+
+- name: CS Install - Add Crowdsec repository key
+  ansible.builtin.apt_key:
+    url: https://packagecloud.io/crowdsec/crowdsec/gpgkey
+    state: present
+  become: true
+
+- name: CS Install - Add Crowdsec repository
+  ansible.builtin.apt_repository:
+    repo: "deb https://packagecloud.io/crowdsec/crowdsec/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} main"
+    state: present
+  become: true
+
+- name: CS Install - Install Crowdsec
+  ansible.builtin.package:
+    update_cache: true
+    name: crowdsec
+    state: present
+  become: true

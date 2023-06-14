@@ -1,0 +1,137 @@
+---
+#
+# Add or remove all plugins:
+# - Collections
+# - Scenarios
+# - Parsers
+# - Postoverflows
+#
+# Note: plugins not listed will be removed
+#
+- name: CS Plugins - Get installed Collections
+  ansible.builtin.command:
+    cmd: "cscli collections list --output json"
+  register: collections_list
+  changed_when: false
+
+- name: CS Plugins - Create Collections fact
+  ansible.builtin.set_fact:
+    fact_collections_list: "{{ collections_list.stdout | from_json }}"
+
+- name: CS Plugins - Install Collections
+  ansible.builtin.command:
+    cmd: "cscli collections install {{ item }} --force"
+  with_items: "{{ cs_collections_install }}"
+  register: collections_install
+  changed_when: false
+  become: true
+  when:
+    - cs_collections_install is defined and cs_collections_install | length > 0
+    - item not in fact_collections_list.collections | json_query('[].name') | list
+
+- name: CS Plugins - Remove Collections
+  ansible.builtin.command:
+    cmd: "cscli collections remove {{ item }} --force"
+  with_items: "{{ fact_collections_list.collections | json_query('[].name') | list }}"
+  register: collections_remove
+  changed_when: false
+  become: true
+  when:
+    - cs_collections_install is defined and cs_collections_install | length > 0
+    - item not in cs_collections_install
+
+- name: CS Plugins - Get installed Scenarios
+  ansible.builtin.command:
+    cmd: "cscli scenarios list --output json"
+  register: scenarios_list
+  changed_when: false
+
+- name: CS Plugins - Create Scenarios fact
+  ansible.builtin.set_fact:
+    fact_scenarios_list: "{{ scenarios_list.stdout | from_json }}"
+
+- name: CS Plugins - Install Scenarios
+  ansible.builtin.command:
+    cmd: "cscli scenarios install {{ item }} --force"
+  with_items: "{{ cs_scenarios_install }}"
+  register: scenarios_install
+  changed_when: false
+  become: true
+  when:
+    - cs_scenarios_install is defined and cs_scenarios_install | length > 0
+    - item not in fact_scenarios_list.scenarios | json_query('[].name') | list
+
+- name: CS Plugins - Remove Scenarios
+  ansible.builtin.command:
+    cmd: "cscli scenarios install {{ item }} --force"
+  with_items: "{{ fact_scenarios_list.scenarios | json_query('[].name') | list }}"
+  register: scenarios_remove
+  changed_when: false
+  become: true
+  when:
+    - cs_scenarios_install is defined and cs_scenarios_install | length > 0
+    - item not in cs_scenarios_install
+
+- name: CS Plugins - Get installed Parsers
+  ansible.builtin.command:
+    cmd: "cscli parsers list --output json"
+  register: parsers_list
+  changed_when: false
+
+- name: CS Plugins - Create Parsers fact
+  ansible.builtin.set_fact:
+    fact_parsers_list: "{{ parsers_list.stdout | from_json }}"
+
+- name: CS Plugins - Install Parsers
+  ansible.builtin.command:
+    cmd: "cscli parsers install {{ item }} --force"
+  with_items: "{{ cs_parsers_install }}"
+  register: parsers_install
+  changed_when: false
+  become: true
+  when:
+    - cs_parsers_install is defined and cs_parsers_install | length > 0
+    - item not in fact_parsers_list.parsers | json_query('[].name') | list
+
+- name: CS Plugins - Remove Parsers
+  ansible.builtin.command:
+    cmd: "cscli parsers install {{ item }} --force"
+  with_items: "{{ fact_parsers_list.parsers | json_query('[].name') | list }}"
+  register: parsers_remove
+  changed_when: false
+  become: true
+  when:
+    - cs_parsers_install is defined and cs_parsers_install | length > 0
+    - item not in cs_parsers_install
+
+- name: CS Plugins - Get installed Postoverflows
+  ansible.builtin.command:
+    cmd: "cscli postoverflows list --output json"
+  register: postoverflows_list
+  changed_when: false
+
+- name: CS Plugins - Create Postoverflows fact
+  ansible.builtin.set_fact:
+    fact_postoverflows_list: "{{ postoverflows_list.stdout | from_json }}"
+
+- name: CS Plugins - Install Postoverflows
+  ansible.builtin.command:
+    cmd: "cscli postoverflows install {{ item }} --force"
+  with_items: "{{ cs_postoverflows_install }}"
+  register: postoverflows_install
+  changed_when: false
+  become: true
+  when:
+    - cs_postoverflows_install is defined and cs_postoverflows_install | length > 0
+    - item not in fact_postoverflows_list.postoverflows | json_query('[].name') | list
+
+- name: CS Plugins - Remove Postoverflows
+  ansible.builtin.command:
+    cmd: "cscli postoverflows install {{ item }} --force"
+  with_items: "{{ fact_postoverflows_list.postoverflows | json_query('[].name') | list }}"
+  register: postoverflows_remove
+  changed_when: false
+  become: true
+  when:
+    - cs_postoverflows_install is defined and cs_postflows_install | length > 0
+    - item not in cs_postoverflows_install

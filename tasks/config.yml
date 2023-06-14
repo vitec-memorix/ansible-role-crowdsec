@@ -1,0 +1,31 @@
+---
+#
+# Create all configuration files needed to start crowdsec
+#
+- name: CS Config - Create config.yml
+  ansible.builtin.template:
+    src: etc/crowdsec/config.yaml.j2
+    dest: /etc/crowdsec/config.yaml
+    mode: '0600'
+    owner: root
+    group: root
+  become: true
+  notify: restart_crowdsec
+
+- name: CS Config - Create profiles.yaml
+  ansible.builtin.template:
+    src: etc/crowdsec/profiles.yaml.j2
+    dest: /etc/crowdsec/profiles.yaml
+    mode: '0600'
+    owner: root
+    group: root
+  with_items: "{{ cs_profiles }}"
+  become: true
+  notify: reload_crowdsec
+
+- name: CS Config - Install BASH Completion
+  ansible.builtin.shell:
+    "set -o pipefail && cscli completion bash | tee /etc/bash_completion.d/cscli"
+  changed_when: false
+  become: true
+  when: cs_bash_completion is true

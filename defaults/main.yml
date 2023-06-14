@@ -1,0 +1,56 @@
+---
+cs_lapi: false
+cs_agent: false
+
+cs_agents:
+  - host1.example.com
+  - host2.example.com
+cs_agent_password: 'AnotherVeryDifficultToBrakePasswordHere'
+cs_agent_disable_api: true
+
+cs_packages:
+  - curl
+  - gnupg
+  - apt-transport-https
+  - debian-archive-keyring
+
+cs_collections_install:
+  - crowdsecurity/sshd
+  - crowdsecurity/apache2
+
+cs_scenarions_install: []
+
+cs_parsers_install: []
+
+cs_postflows_install: []
+
+cs_server_listen_uri: '127.0.0.1:8080'
+
+cs_db_install_postgres: true
+cs_db_type: 'postgresql'
+cs_db_user: 'crowdsec'
+cs_db_password: 'ThisShouldBeChangedToSeomethingSecure'
+cs_db_name: 'crowdsec'
+cs_db_host: '127.0.0.1'
+cs_db_port: '5432'
+
+cs_profiles:
+  - name: default_ip_remediation
+    debug: false
+    filters:
+      - Alert.Remediation == true && Alert.GetScope() == "Ip"
+    decisions:
+      - type: ban
+        duration: 4h
+
+# cs_acquis:
+#   - name: haproxy
+#     filenames:
+#       - /var/log/haproxy*.log
+#     type: haproxy
+
+cs_bash_completion: false
+
+cs_prometheus_enabled: true
+cs_prometheus_listen_addr: '127.0.0.1'
+cs_prometheur_listen_port: '6060'

@@ -1,0 +1,43 @@
+---
+#
+# Keep different stages in seperate yaml files to
+# make sure the files stay readable
+#
+- name: CS Run install tasks
+  ansible.builtin.include_tasks:
+    file: install.yml
+
+- name: CS Run update tasks
+  ansible.builtin.include_tasks:
+    file: update.yml
+
+- name: CS Run plugin tasks
+  ansible.builtin.include_tasks:
+    file: plugins.yml
+
+- name: CS Create configuration files
+  ansible.builtin.include_tasks:
+    file: config.yml
+
+- name: CS Install and Configure PostgreSQL
+  ansible.builtin.include_tasks:
+    file: postgres.yml
+  when:
+    - cs_db_install_postgres is defined and cs_db_install_postgres is true
+    - cs_lapi is defined and cs_lapi is true
+
+# Everything should be ready now, so just to be sure we
+# will flush all pending handlers
+
+- name: CS Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: CS LAPI Specifics
+  ansible.builtin.include_tasks:
+    file: lapi.yml
+  when: cs_lapi is defined and cs_lapi is true
+
+- name: CS Agent Specifics
+  ansible.builtin.include_tasks:
+    file: agent.yml
+  when: cs_agent is defined and cs_agent is true

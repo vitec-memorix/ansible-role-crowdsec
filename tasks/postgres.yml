@@ -1,0 +1,44 @@
+---
+- name: CS Postgres - Install PostgreSQL and dependencies
+  ansible.builtin.package:
+    name:
+      - postgresql
+      - python3-psycopg2
+    state: present
+
+- name: CS Postgres - Enable and Start
+  ansible.builtin.service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: CS Postgres - Create Database
+  community.postgresql.postgresql_db:
+    state: present
+    name: "{{ cs_db_name }}"
+  become: true
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true
+
+- name: CS Postgres - Create database user
+  community.postgresql.postgresql_user:
+    state: present
+    name: "{{ cs_db_user }}"
+    password: "{{ cs_db_password }}"
+  become: true
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true
+
+- name: CS Postgres - Grant database privileges
+  community.postgresql.postgresql_privs:
+    type: database
+    database: "{{ cs_db_name }}"
+    roles: "{{ cs_db_user }}"
+    grant_option: false
+    privs: all
+  become: true
+  become_user: postgres
+  vars:
+    ansible_ssh_pipelining: true
