@@ -27,12 +27,12 @@
   become: true
   when:
     - cs_collections_install is defined and cs_collections_install | length > 0
-    - item not in fact_collections_list.collections | json_query('[].name') | list
+    - item not in fact_collections_list.collections | json_query('[].name')
 
 - name: CS Plugins - Remove Collections
   ansible.builtin.command:
     cmd: "cscli collections remove {{ item }} --force"
-  with_items: "{{ fact_collections_list.collections | json_query('[].name') | list }}"
+  with_items: "{{ fact_collections_list.collections | json_query('[].name') }}"
   register: collections_remove
   changed_when: false
   become: true
@@ -59,12 +59,12 @@
   become: true
   when:
     - cs_scenarios_install is defined and cs_scenarios_install | length > 0
-    - item not in fact_scenarios_list.scenarios | json_query('[].name') | list
+    - item not in fact_scenarios_list.scenarios | json_query('[].name')
 
 - name: CS Plugins - Remove Scenarios
   ansible.builtin.command:
     cmd: "cscli scenarios install {{ item }} --force"
-  with_items: "{{ fact_scenarios_list.scenarios | json_query('[].name') | list }}"
+  with_items: "{{ fact_scenarios_list.scenarios | json_query('[].name') }}"
   register: scenarios_remove
   changed_when: false
   become: true
@@ -91,12 +91,12 @@
   become: true
   when:
     - cs_parsers_install is defined and cs_parsers_install | length > 0
-    - item not in fact_parsers_list.parsers | json_query('[].name') | list
+    - item not in fact_parsers_list.parsers | json_query('[].name')
 
 - name: CS Plugins - Remove Parsers
   ansible.builtin.command:
     cmd: "cscli parsers install {{ item }} --force"
-  with_items: "{{ fact_parsers_list.parsers | json_query('[].name') | list }}"
+  with_items: "{{ fact_parsers_list.parsers | json_query('[].name') }}"
   register: parsers_remove
   changed_when: false
   become: true
@@ -123,12 +123,12 @@
   become: true
   when:
     - cs_postoverflows_install is defined and cs_postoverflows_install | length > 0
-    - item not in fact_postoverflows_list.postoverflows | json_query('[].name') | list
+    - item not in fact_postoverflows_list.postoverflows | json_query('[].name')
 
 - name: CS Plugins - Remove Postoverflows
   ansible.builtin.command:
     cmd: "cscli postoverflows install {{ item }} --force"
-  with_items: "{{ fact_postoverflows_list.postoverflows | json_query('[].name') | list }}"
+  with_items: "{{ fact_postoverflows_list.postoverflows | json_query('[].name') }}"
   register: postoverflows_remove
   changed_when: false
   become: true
