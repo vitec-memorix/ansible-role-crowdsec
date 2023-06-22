@@ -28,6 +28,7 @@
   when:
     - cs_collections_install is defined and cs_collections_install | length > 0
     - item not in fact_collections_list.collections | json_query('[].name')
+    - item is search("/")
 
 - name: CS Plugins - Remove Collections
   ansible.builtin.command:
@@ -39,6 +40,7 @@
   when:
     - cs_collections_install is defined and cs_collections_install | length > 0
     - item not in cs_collections_install
+    - item is search("/")
 
 - name: CS Plugins - Get installed Scenarios
   ansible.builtin.command:
@@ -60,6 +62,7 @@
   when:
     - cs_scenarios_install is defined and cs_scenarios_install | length > 0
     - item not in fact_scenarios_list.scenarios | json_query('[].name')
+    - item is search("/")
 
 - name: CS Plugins - Remove Scenarios
   ansible.builtin.command:
@@ -71,6 +74,7 @@
   when:
     - cs_scenarios_install is defined and cs_scenarios_install | length > 0
     - item not in cs_scenarios_install
+    - item is search("/")
 
 - name: CS Plugins - Get installed Parsers
   ansible.builtin.command:
@@ -92,6 +96,7 @@
   when:
     - cs_parsers_install is defined and cs_parsers_install | length > 0
     - item not in fact_parsers_list.parsers | json_query('[].name')
+    - item is search("/")
 
 - name: CS Plugins - Remove Parsers
   ansible.builtin.command:
@@ -103,6 +108,7 @@
   when:
     - cs_parsers_install is defined and cs_parsers_install | length > 0
     - item not in cs_parsers_install
+    - item is search("/")
 
 - name: CS Plugins - Get installed Postoverflows
   ansible.builtin.command:
@@ -124,6 +130,7 @@
   when:
     - cs_postoverflows_install is defined and cs_postoverflows_install | length > 0
     - item not in fact_postoverflows_list.postoverflows | json_query('[].name')
+    - item is search("/")
 
 - name: CS Plugins - Remove Postoverflows
   ansible.builtin.command:
@@ -135,3 +142,4 @@
   when:
     - cs_postoverflows_install is defined and cs_postflows_install | length > 0
     - item not in cs_postoverflows_install
+    - item is search("/")
