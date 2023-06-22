@@ -18,7 +18,7 @@ cs_collections_install:
   - crowdsecurity/sshd
   - crowdsecurity/apache2
 
-cs_scenarions_install: []
+cs_scenarios_install: []
 
 cs_parsers_install: []
 
