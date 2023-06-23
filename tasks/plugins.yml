@@ -66,7 +66,7 @@
 
 - name: CS Plugins - Remove Scenarios
   ansible.builtin.command:
-    cmd: "cscli scenarios install {{ item }} --force"
+    cmd: "cscli scenarios remove {{ item }} --force"
   with_items: "{{ fact_scenarios_list.scenarios | json_query('[].name') }}"
   register: scenarios_remove
   changed_when: false
@@ -100,7 +100,7 @@
 
 - name: CS Plugins - Remove Parsers
   ansible.builtin.command:
-    cmd: "cscli parsers install {{ item }} --force"
+    cmd: "cscli parsers remove {{ item }} --force"
   with_items: "{{ fact_parsers_list.parsers | json_query('[].name') }}"
   register: parsers_remove
   changed_when: false
@@ -134,7 +134,7 @@
 
 - name: CS Plugins - Remove Postoverflows
   ansible.builtin.command:
-    cmd: "cscli postoverflows install {{ item }} --force"
+    cmd: "cscli postoverflows remove {{ item }} --force"
   with_items: "{{ fact_postoverflows_list.postoverflows | json_query('[].name') }}"
   register: postoverflows_remove
   changed_when: false
