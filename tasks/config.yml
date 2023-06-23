@@ -10,7 +10,7 @@
     owner: root
     group: root
   become: true
-  notify: restart_crowdsec
+  notify: crowdsec_restart
 
 - name: CS Config - Create profiles.yaml
   ansible.builtin.template:
@@ -21,7 +21,7 @@
     group: root
   with_items: "{{ cs_profiles }}"
   become: true
-  notify: reload_crowdsec
+  notify: crowdsec_reload
 
 - name: CS Config - Install BASH Completion
   ansible.builtin.shell:
