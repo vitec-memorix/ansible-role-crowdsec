@@ -7,31 +7,6 @@
     group: root
     mode: '0644'
 
-- name: CS Agent - Check if custom systemd service exists
-  ansible.builtin.stat:
-    path: /etc/systemd/system/crowdsec.service
-  register: cs_service_stat
-
-- name: CS Agent - Copy systemd unit when API should not start
-  ansible.builtin.copy:
-    src: /lib/systemd/system/crowdsec.service
-    dest: /etc/systemd/system/crowdsec.service
-    owner: root
-    group: root
-    mode: '0644'
-    remote_src: true
-    backup: false
-  when: cs_agent_disable_api is true and cs_service_stat.exists is defined
-
-- name: CS Agent - Modify systemd unit so API does not start
-  ansible.builtin.replace:
-    path: "/etc/systemd/system/crowdsec.service"
-    regexp: 'ExecStart=/usr/bin/crowdsec -c /etc/crowdsec/config.yaml'
-    replace: 'ExecStart=/usr/bin/crowdsec -c /etc/crowdsec/config.yaml -no-api'
-    backup: false
-  when: cs_agent_disable_api is true and cs_service_stat.exists is defined
-  notify: crowdsec_restart
-
 - name: CS Agent - Ensure acquis.d directory is present
   ansible.builtin.file:
     path: /etc/crowdsec/acquis.d

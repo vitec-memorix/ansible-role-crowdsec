@@ -61,9 +61,11 @@ api:
     insecure_skip_verify: false
     credentials_path: /etc/crowdsec/local_api_credentials.yaml
   server:
+    enable: {{ cs_server_enable | default('false') }}
     log_level: info
     listen_uri: {{ cs_server_listen_uri }}
     profiles_path: /etc/crowdsec/profiles.yaml
+    use_forwarded_for_headers: {{ cs_server_use_forwarded_for | default('false') }}
     console_path: /etc/crowdsec/console.yaml
     online_client: # Central API credentials (to push signals and receive bad IPs)
       credentials_path: /etc/crowdsec/online_api_credentials.yaml
