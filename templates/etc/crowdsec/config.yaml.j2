@@ -63,18 +63,24 @@ api:
   server:
     enable: {{ cs_lapi | default('false') }}
     log_level: info
-    listen_uri: {{ cs_server_listen_uri }}
+    listen_uri: {{ cs_lapi_listen_uri }}
     profiles_path: /etc/crowdsec/profiles.yaml
-    use_forwarded_for_headers: {{ cs_server_use_forwarded_for | default('false') }}
+    use_forwarded_for_headers: {{ cs_lapi_use_forwarded_for | default('false') }}
     console_path: /etc/crowdsec/console.yaml
     online_client: # Central API credentials (to push signals and receive bad IPs)
       credentials_path: /etc/crowdsec/online_api_credentials.yaml
     trusted_ips: # IP ranges, or IPs which can have admin API access
       - 127.0.0.1
       - ::1
+{% if cs_lapi_tls_enable == true %}
+    tls:
+        cert_file: {{ cs_lapi_tls_cert_file | default('') }}
+        key_file: {{ cs_lapi_tls_key_file | default('') }}
+{% else %}
 #    tls:
 #      cert_file: /etc/crowdsec/ssl/cert.pem
 #      key_file: /etc/crowdsec/ssl/key.pem
+{% endif %}
 prometheus:
   enabled: {{ cs_prometheus_enabled }}
   level: full

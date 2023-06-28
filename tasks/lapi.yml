@@ -1,7 +1,7 @@
 ---
 - name: CS LAPI - Add LAPI local agent to LAPI
   ansible.builtin.command:
-    cmd: "cscli machines add {{ inventory_hostname }} -p {{ cs_agent_password }} -u http://{{ cs_server_listen_uri }} --force"
+    cmd: "cscli machines add {{ inventory_hostname }} -p {{ cs_agent_password }} -u {{ cs_lapi_protocol }}://{{ cs_lapi_listen_uri }} --force"
   become: true
   changed_when: false
 
@@ -17,7 +17,7 @@
 
 - name: CS LAPI - Add Machines (Agents)
   ansible.builtin.command:
-    cmd: "cscli machines add {{ item }} -p {{ cs_agent_password }} -u http://{{ cs_server_listen_uri }} -f /dev/null --force"
+    cmd: "cscli machines add {{ item }} -p {{ cs_agent_password }} -u {{ cs_lapi_protocol }}://{{ cs_lapi_listen_uri }} -f /dev/null --force"
   with_items: "{{ cs_agents }}"
   register: machines_install
   changed_when: false

@@ -13,7 +13,7 @@ log_compression: true
 log_max_size: 100
 log_max_backups: 3
 log_max_age: 30
-api_url: http://{{ cs_server_listen_uri }}
+api_url: {{ cs_lapi_protocol }}://{{ cs_lapi_listen_uri }}
 api_key: {{ item.api_key | default('pleaschangeme') }}
 insecure_skip_verify: false
 disable_ipv6: {{ item.disable_ipv6 | default('false') }}
