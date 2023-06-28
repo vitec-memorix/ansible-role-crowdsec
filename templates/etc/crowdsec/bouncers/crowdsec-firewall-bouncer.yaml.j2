@@ -15,7 +15,7 @@ log_max_backups: 3
 log_max_age: 30
 api_url: {{ cs_lapi_protocol }}://{{ cs_lapi_listen_uri }}
 api_key: {{ item.api_key | default('pleaschangeme') }}
-insecure_skip_verify: false
+insecure_skip_verify: {{ cs_lapi_skip_verify | default('false') }}
 disable_ipv6: {{ item.disable_ipv6 | default('false') }}
 deny_action: {{ item.deny_action |default('DROP') }}
 deny_log: {{ item.deny_log | default('false') }}

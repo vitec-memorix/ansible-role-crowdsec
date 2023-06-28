@@ -58,7 +58,7 @@ plugin_config:
   group: nogroup # plugin process would be ran on behalf of this group
 api:
   client:
-    insecure_skip_verify: false
+    insecure_skip_verify: {{ cs_lapi_skip_verify | default('false') }}
     credentials_path: /etc/crowdsec/local_api_credentials.yaml
   server:
     enable: {{ cs_lapi | default('false') }}
