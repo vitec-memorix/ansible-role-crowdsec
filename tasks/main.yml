@@ -14,6 +14,7 @@
 - name: CS Run plugin tasks
   ansible.builtin.include_tasks:
     file: plugins.yml
+  when: cs_agent
 
 - name: CS Create configuration files
   ansible.builtin.include_tasks:
@@ -24,7 +25,7 @@
     file: postgres.yml
   when:
     - cs_db_install_postgres is defined and cs_db_install_postgres is true
-    - cs_lapi is defined and cs_lapi is true
+    - cs_lapi
 
 # Everything should be ready now, so just to be sure we
 # will flush all pending handlers
@@ -35,12 +36,12 @@
 - name: CS LAPI Specifics
   ansible.builtin.include_tasks:
     file: lapi.yml
-  when: cs_lapi is defined and cs_lapi is true
+  when: cs_lapi
 
 - name: CS Agent Specifics
   ansible.builtin.include_tasks:
     file: agent.yml
-  when: cs_agent is defined and cs_agent is true
+  when: cs_agent
 
 - name: CS Firewall Bouncer
   ansible.builtin.include_tasks:
