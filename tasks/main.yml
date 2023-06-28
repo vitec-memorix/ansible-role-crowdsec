@@ -41,3 +41,8 @@
   ansible.builtin.include_tasks:
     file: agent.yml
   when: cs_agent is defined and cs_agent is true
+
+- name: CS Firewall Bouncer
+  ansible.builtin.include_tasks:
+    file: firewall_bouncer.yml
+  when: cs_firewall_bouncer is defined and cs_firewall_bouncer | length > 0

@@ -54,3 +54,22 @@ cs_bash_completion: false
 cs_prometheus_enabled: true
 cs_prometheus_listen_addr: '127.0.0.1'
 cs_prometheur_listen_port: '6060'
+
+# cs_firewall_bouncer:
+#  mode: ipset
+#  update_frequency: 10s
+#  api_key: 'AnotherVeryDifficultToBrakePasswordHere'
+#  disable_ipv6: false
+#  deny_action: DROP
+#  deny_log: false
+#  supported_decisions_types:
+#  - ban
+#  blacklists_ipv4: crowdsec-blacklists
+#  blacklists_ipv6: crowdsec6-blacklists
+#  ipset_type: nethash
+#  iptables_chains:
+#  - INPUT
+#  prometheus:
+#    enabled: true
+#    listen_addr: 127.0.0.1
+#    listen_port: 60601

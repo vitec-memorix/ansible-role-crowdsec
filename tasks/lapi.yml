@@ -26,7 +26,7 @@
     - cs_agents is defined and cs_agents | length > 0
     - item not in fact_machines_list | json_query('[].machineId')
 
-- name: CS Plugins - Remove Machines (Agents)
+- name: CS LAPI - Remove Machines (Agents)
   ansible.builtin.command:
     cmd: "cscli machines remove {{ item }}"
   with_items: "{{ fact_machines_list | json_query('[].machineId') }}"
@@ -37,3 +37,33 @@
     - cs_agents is defined and cs_agents | length > 0
     - item not in cs_agents
     - item not in inventory_hostname
+
+- name: CS LAPI - Get current Bouncers
+  ansible.builtin.command:
+    cmd: "cscli bouncers list --output json"
+  register: bouncers_list
+  changed_when: false
+
+- name: CS LAPI - Create Bouncers fact
+  ansible.builtin.set_fact:
+    fact_bouncers_list: "{{ bouncers_list.stdout | from_json }}"
+
+- name: CS LAPI - Add Bouncers
+  ansible.builtin.command:
+    cmd: "cscli bouncers add {{ item.name }} -k {{ item.api_key }}"
+  with_items: "{{ cs_bouncers }}"
+  changed_when: false
+  become: true
+  when:
+   - cs_bouncers is defined and cs_bouncers | length > 0
+   - item.name not in fact_bouncers_list | json_query('[].name')
+
+- name: CS LAPI - Remove Bouncers
+  ansible.builtin.command:
+    cmd: "cscli bouncers delete {{ item }}"
+  with_items: "{{ fact_bouncers_list | json_query('[].name') }}"
+  changed_when: false
+  become: true
+  when:
+    - cs_bouncers is defined and cs_bouncers | length > 0
+    - item not in cs_bouncers | json_query('[].name')

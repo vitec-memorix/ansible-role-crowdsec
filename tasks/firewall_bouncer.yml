@@ -1,0 +1,41 @@
+---
+- name: CS Firewall Bouncer - Make sure /etc/crowdsec/bouncers it there
+  ansible.builtin.file:
+    path: /etc/crowdsec/bouncers
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: CS Firewall Bouncer - Set mode fact
+  ansible.builtin.set_fact:
+    cs_firewall_bouncer_mode: "{{ item.mode }}"
+  with_items: "{{ cs_firewall_bouncer }}"
+
+- name: CS Firewall Bouncer - Render configfile
+  ansible.builtin.template:
+    src: etc/crowdsec/bouncers/crowdsec-firewall-bouncer.yaml.j2
+    dest: /etc/crowdsec/bouncers/crowdsec-firewall-bouncer.yaml
+    mode: '0600'
+    owner: root
+    group: root
+  with_items: "{{ cs_firewall_bouncer }}"
+  become: true
+
+- name: CS Firewall Bouncer - Install prerequisites Iptables
+  ansible.builtin.package:
+    update_cache: false
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - crowdsec-firewall-bouncer-iptables
+    - ipset
+  become: true
+  when: cs_firewall_bouncer_mode == 'iptables' or cs_firewall_bouncer_mode == 'ipset'
+
+- name: CS Firewall Bouncer - Install prerequisites NFTables
+  ansible.builtin.package:
+    update_cache: false
+    name: crowdsec-firewall-bouncer-nftables
+    state: present
+  become: true
+  when: cs_firewall_bouncer_mode == 'netfilter'

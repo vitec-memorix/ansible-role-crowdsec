@@ -1,0 +1,66 @@
+#
+# {{ ansible_managed }}
+#
+
+mode: {{ item.mode | default('iptables') }}
+pid_dir: /var/run/
+update_frequency: {{ item.update_frequency | default('10s') }}
+daemonize: true
+log_mode: file
+log_dir: /var/log/
+log_level: info
+log_compression: true
+log_max_size: 100
+log_max_backups: 3
+log_max_age: 30
+api_url: http://{{ cs_server_listen_uri }}
+api_key: {{ item.api_key | default('pleaschangeme') }}
+insecure_skip_verify: false
+disable_ipv6: {{ item.disable_ipv6 | default('false') }}
+deny_action: {{ item.deny_action |default('DROP') }}
+deny_log: {{ item.deny_log | default('false') }}
+supported_decisions_types:
+  - ban
+#to change log prefix
+#deny_log_prefix: "crowdsec: "
+#to change the blacklists name
+blacklists_ipv4: {{ item.blacklists_ipv4 | default('crowdsec-blacklists') }}
+blacklists_ipv6: {{ item.blacklists_ipv6 | default('crowdsec6-blacklists') }}
+#type of ipset to use
+ipset_type: {{ item.ipset_type | default('nethash') }}
+#if present, insert rule in those chains
+{% if item.iptables_chains is defined %}
+iptables_chains:
+  {% for chain in item.iptables_chains %}
+  - {{ chain }}
+  {% endfor %}
+{% endif %}
+
+{% if item.mode == "nftables" %}
+## nftables
+nftables:
+  ipv4:
+    enabled: true
+    set-only: false
+    table: {{ item.nftables_table }}
+    chain: {{ item.nftables_chain }}
+    priority: -10
+  ipv6:
+    enabled: true
+    set-only: false
+    table: {{ item.nftables6_table }}
+    chain: {{ item.nftables6_chain }}
+    priority: -10
+
+  {% if item.nftables_hooks is defined %}
+nftables_hooks:
+    {% for hook in item.nftables_hooks %}
+  - {{ hook }}
+    {% endfor %}
+  {% endif %}
+{% endif %}
+
+#prometheus:
+#  enabled: true
+#  listen_addr: 127.0.0.1
+#  listen_port: 60601
