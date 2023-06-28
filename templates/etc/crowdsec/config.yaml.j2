@@ -61,7 +61,7 @@ api:
     insecure_skip_verify: false
     credentials_path: /etc/crowdsec/local_api_credentials.yaml
   server:
-    enable: {{ cs_server_enable | default('false') }}
+    enable: {{ cs_lapi | default('false') }}
     log_level: info
     listen_uri: {{ cs_server_listen_uri }}
     profiles_path: /etc/crowdsec/profiles.yaml
