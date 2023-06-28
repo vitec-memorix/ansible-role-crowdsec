@@ -14,3 +14,10 @@
     daemon_reload: true
   become: true
   listen: crowdsec_reload
+
+- name: Restart Crowdsec Firewall Bouncer
+  ansible.builtin.systemd:
+    name: crowdsec-firewall-bouncer
+    state: restarted
+  become: true
+  listen: crowdsec_firewall_bouncer_restart

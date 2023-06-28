@@ -19,6 +19,7 @@
     owner: root
     group: root
   with_items: "{{ cs_firewall_bouncer }}"
+  notify: crowdsec_firewall_bouncer_restart
   become: true
 
 - name: CS Firewall Bouncer - Install prerequisites Iptables
