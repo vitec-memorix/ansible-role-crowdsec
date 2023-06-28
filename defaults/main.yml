@@ -6,7 +6,6 @@ cs_agents:
   - host1.example.com
   - host2.example.com
 cs_agent_password: 'AnotherVeryDifficultToBrakePasswordHere'
-cs_agent_disable_api: true
 
 cs_packages:
   - curl
