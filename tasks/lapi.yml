@@ -55,8 +55,8 @@
   changed_when: false
   become: true
   when:
-   - cs_bouncers is defined and cs_bouncers | length > 0
-   - item.name not in fact_bouncers_list | json_query('[].name')
+    - cs_bouncers is defined and cs_bouncers | length > 0
+    - item.name not in fact_bouncers_list | json_query('[].name')
 
 - name: CS LAPI - Remove Bouncers
   ansible.builtin.command:
