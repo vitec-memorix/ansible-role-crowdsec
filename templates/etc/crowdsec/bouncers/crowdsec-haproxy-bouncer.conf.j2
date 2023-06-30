@@ -1,0 +1,32 @@
+#
+# {{ ansible_managed }}
+#
+
+ENABLED={{ item.enabled | default('true') }}
+API_KEY={{ item.api_key | default('') }}
+# haproxy
+# path to community_blocklist.map
+MAP_PATH={{ item.map_path | default('/var/lib/crowdsec/lua/haproxy/community_blocklist.map') }}
+# bounce for all type of remediation that the bouncer can receive from the local API
+BOUNCING_ON_TYPE={{ item.bouncing_on_type | default('all') }}
+FALLBACK_REMEDIATION={{ item.fallback_remediation | default('ban') }}
+REQUEST_TIMEOUT={{ item.request_timeout | default('3000') }}
+UPDATE_FREQUENCY={{ item.update_frequency | default('10') }}
+# live or stream
+MODE={{ item.mode | default('stream') }}
+# exclude the bouncing on those location
+EXCLUDE_LOCATION={{ item.exclude_location | default('') }}
+#those apply for "ban" action
+# /!\ REDIRECT_LOCATION and RET_CODE can't be used together. REDIRECT_LOCATION take priority over RET_CODE
+# path to ban template
+BAN_TEMPLATE_PATH={{ item.ban_template_path | default('') }}
+REDIRECT_LOCATION={{ item.redirect_location | default('') }}
+RET_CODE={{ item.ret_code | default('') }}
+#those apply for "captcha" action
+# Captcha Secret Key
+SECRET_KEY={{ item.secret_key | default ('') }}
+# captcha Site key
+SITE_KEY={{ item.site_key | default('') }}
+# path to captcha template
+CAPTCHA_TEMPLATE_PATH={{ item.captcha_template_path | default('/var/lib/crowdsec/lua/haproxy/templates/captcha.html') }}
+CAPTCHA_EXPIRATION={{ item.captcha_expiration | default('3600') }}
