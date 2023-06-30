@@ -27,3 +27,4 @@
     name: crowdsec
     state: present
   become: true
+  when: cs_lapi or cs_agent

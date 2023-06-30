@@ -76,3 +76,21 @@ cs_prometheur_listen_port: '6060'
 #    enabled: true
 #    listen_addr: 127.0.0.1
 #    listen_port: 60601
+
+# cs_haproxy_bouncer:
+#  enabled: true
+#  api_key: 'AnotherVeryDifficultToBrakePasswordHere'
+#  map_path: '/var/lib/crowdsec/lua/haproxy/community_blocklist.map'
+#  bouncing_on_type: 'all'
+#  fallback_remediation: 'ban'
+#  request_timeout: '3000'
+#  update_frequency: '10'
+#  mode: 'stream'
+#  exclude_location: ''
+#  ban_template_path: ''
+#  redirect_location: ''
+#  ret_code: ''
+#  secret_key: ''
+#  site_key: ''
+#  captcha_template_path: '/var/lib/crowdsec/lua/haproxy/templates/captcha.html'
+#  captcha_expiration: '3600'

@@ -10,6 +10,7 @@
 - name: CS Run update tasks
   ansible.builtin.include_tasks:
     file: update.yml
+  when: cs_agent or cs_lapi
 
 - name: CS Run plugin tasks
   ansible.builtin.include_tasks:
@@ -19,6 +20,7 @@
 - name: CS Create configuration files
   ansible.builtin.include_tasks:
     file: config.yml
+  when: cs_agent or cs_lapi
 
 - name: CS Install and Configure PostgreSQL
   ansible.builtin.include_tasks:
@@ -47,3 +49,8 @@
   ansible.builtin.include_tasks:
     file: firewall_bouncer.yml
   when: cs_firewall_bouncer is defined and cs_firewall_bouncer | length > 0
+
+- name: CS Haproxy Bouncer
+  ansible.builtin.include_tasks:
+    file: haproxy_bouncer.yml
+  when: cs_haproxy_bouncer is defined and cs_haproxy_bouncer | length > 0
