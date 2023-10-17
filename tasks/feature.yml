@@ -1,0 +1,11 @@
+---
+
+- name: CS Feature - Create feature.yaml
+  ansible.builtin.template:
+    src: etc/crowdsec/feature.yaml.j2
+    dest: /etc/crowdsec/feature.yaml
+    mode: '0600'
+    owner: root
+    group: root
+  become: true
+  notify: crowdsec_restart

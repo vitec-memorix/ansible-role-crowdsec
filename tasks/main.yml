@@ -45,6 +45,11 @@
     file: agent.yml
   when: cs_agent
 
+- name: CS Enable Features
+  ansible.builtin.include_tasks:
+    file: feature.yml
+  when: cs_features is defined and cs_features | length >0
+
 - name: CS Firewall Bouncer
   ansible.builtin.include_tasks:
     file: firewall_bouncer.yml
