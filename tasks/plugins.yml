@@ -64,6 +64,27 @@
     - item not in fact_scenarios_list.scenarios | json_query('[].name')
     - item is search("/")
 
+- name: CS Plugins - Install Custom Scenarios
+  ansible.builtin.template:
+    src: "etc/crowdsec/scenarios/_default.j2"
+    dest: "/etc/crowdsec/scenarios/{{ item.file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  with_items: "{{ cs_scenarios_configs }}"
+  notify: crowdsec_reload
+  when: cs_scenarios_configs is defined and cs_scenarios_configs | length > 0
+
+- name: CS Plugins - Remove Custom Scenarios
+  ansible.builtin.file:
+    path: "/etc/crowdsec/scenarios/{{ item.file }}"
+    state: "{{ item.state | default('file') }}"
+    owner: root
+    group: root
+    mode: "0644"
+  with_items: "{{ cs_scenarios_configs }}"
+  when: cs_scenarios_configs is defined and cs_scenarios_configs | length > 0
+
 - name: CS Plugins - Remove Scenarios
   ansible.builtin.command:
     cmd: "cscli scenarios remove {{ item }} --force"

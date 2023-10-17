@@ -25,6 +25,8 @@ cs_postflows_install: []
 
 cs_features: []
 
+cs_scenarios_configs: []
+
 cs_lapi_listen_uri: '127.0.0.1:8080'
 cs_lapi_protocol: 'http'
 cs_lapi_tls_enable: false
