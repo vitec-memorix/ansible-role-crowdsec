@@ -56,6 +56,11 @@ cs_profiles:
 #       - /var/log/haproxy*.log
 #     type: haproxy
 
+cs_allowlist:
+  - name: allowlist
+    filenames:
+      - /etc/crowdsec/allowlist.yaml
+
 cs_bash_completion: false
 
 cs_prometheus_enabled: true
