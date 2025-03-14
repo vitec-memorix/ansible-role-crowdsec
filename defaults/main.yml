@@ -56,10 +56,9 @@ cs_profiles:
 #       - /var/log/haproxy*.log
 #     type: haproxy
 
-cs_allowlist:
-  - name: allowlist
-    filenames:
-      - /etc/crowdsec/allowlist.yaml
+cs_parsers_mywhitelists_cidr:
+  - name: crowdsecurity/allowlists
+  - 127.0.0.0/8
 
 cs_bash_completion: false
 

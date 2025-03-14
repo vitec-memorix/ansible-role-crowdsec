@@ -31,9 +31,9 @@
 
 - name: CS Agent - Generate IP allowlist
   ansible.builtin.template:
-    src: templates/etc/crowdsec/acquis.d/allowlist.yaml.j2
-    dest: "/etc/crowdsec/acquis.d/{{ item.name }}.yaml"
+    src: templates/etc/crowdsec/allowlist.yaml.j2
+    dest: /etc/crowdsec/parsers/s02-enrich/allowlist.yaml"
     owner: root
     group: root
     mode: '0600'
-  with_items: "{{ cs_allowlist }}"
+  with_items: "{{ cs_parsers_mywhitelists_cidr }}"
