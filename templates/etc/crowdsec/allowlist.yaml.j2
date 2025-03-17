@@ -1,8 +1,7 @@
 #
 # {{ ansible_managed }}
 #
-{% if item.name is defined %}
-name: {{ item.name }}
+name: allowlist
 description: "Allowlist events from my ip addresses"
 allowlist:
   reason: "my ip ranges"

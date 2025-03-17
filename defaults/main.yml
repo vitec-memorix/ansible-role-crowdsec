@@ -57,7 +57,6 @@ cs_profiles:
 #     type: haproxy
 
 cs_parsers_mywhitelists_cidr:
-  - name: crowdsecurity/allowlists
   - 127.0.0.0/8
 
 cs_bash_completion: false
