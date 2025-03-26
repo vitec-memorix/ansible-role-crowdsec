@@ -56,6 +56,9 @@ cs_profiles:
 #       - /var/log/haproxy*.log
 #     type: haproxy
 
+cs_parsers_mywhitelists_cidr:
+  - 127.0.0.0/8
+
 cs_bash_completion: false
 
 cs_prometheus_enabled: true

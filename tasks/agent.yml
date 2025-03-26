@@ -27,3 +27,13 @@
   with_items: "{{ cs_acquis }}"
   when: cs_acquis is defined and cs_acquis | length > 0
   notify: crowdsec_restart
+
+
+- name: CS Agent - Generate IP allowlist
+  ansible.builtin.template:
+    src: templates/etc/crowdsec/allowlist.yaml.j2
+    dest: /etc/crowdsec/parsers/s02-enrich/allowlist.yaml"
+    owner: root
+    group: root
+    mode: '0600'
+  with_items: "{{ cs_parsers_mywhitelists_cidr }}"

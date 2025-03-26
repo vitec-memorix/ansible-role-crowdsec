@@ -1,0 +1,11 @@
+#
+# {{ ansible_managed }}
+#
+name: allowlist
+description: "Allowlist events from my ip addresses"
+allowlist:
+  reason: "my ip ranges"
+  cidr:
+{% for ip in cs_parsers_mywhitelists_cidr %}
+  - {{ ip }}
+{% endfor %}
