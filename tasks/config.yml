@@ -19,9 +19,9 @@
     mode: '0600'
     owner: root
     group: root
-  with_items: "{{ cs_profiles }}"
   become: true
   notify: crowdsec_reload
+  when: cs_profiles
 
 - name: CS Config - Install BASH Completion
   ansible.builtin.shell:

@@ -49,6 +49,7 @@ cs_profiles:
     decisions:
       - type: ban
         duration: 4h
+    success: break
 
 # cs_acquis:
 #   - name: haproxy
