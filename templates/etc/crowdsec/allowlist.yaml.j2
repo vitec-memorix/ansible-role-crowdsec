@@ -7,5 +7,5 @@ whitelist:
   reason: "my ip ranges"
   cidr:
 {% for ip in cs_parsers_mywhitelists_cidr %}
-  - {{ ip }}
+    - "{{ ip }}"
 {% endfor %}
