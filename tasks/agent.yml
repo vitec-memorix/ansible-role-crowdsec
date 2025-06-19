@@ -22,7 +22,7 @@
     dest: "/etc/crowdsec/acquis.d/{{ item.name }}.yaml"
     owner: root
     group: root
-    mode: '0600'
+    mode: '0644'
     backup: false
   with_items: "{{ cs_acquis }}"
   when: cs_acquis is defined and cs_acquis | length > 0
@@ -34,5 +34,5 @@
     dest: /etc/crowdsec/parsers/s02-enrich/allowlist.yaml
     owner: root
     group: root
-    mode: '0600'
+    mode: '0644'
   with_items: "{{ cs_parsers_mywhitelists_cidr }}"
