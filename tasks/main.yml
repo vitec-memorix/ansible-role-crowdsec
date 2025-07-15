@@ -3,6 +3,10 @@
 # Keep different stages in seperate yaml files to
 # make sure the files stay readable
 #
+- name: CS Run cleanup tasks
+  ansible.builtin.include_tasks:
+    file: cleanup.yml
+
 - name: CS Run install tasks
   ansible.builtin.include_tasks:
     file: install.yml

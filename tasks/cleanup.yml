@@ -1,0 +1,10 @@
+---
+# Temporary task to cleanup remains of old lists
+- name: CS Cleanup - Remove obsolete lists
+  loop:
+    - /etc/crowdsec/parsers/s02-enrich/allowlist.yaml
+    - /etc/crowdsec/parsers/s02-enrich/allowlist.yaml"
+    - /etc/crowdsec/parsers/s02-enrich/mywhitelists.yaml
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
