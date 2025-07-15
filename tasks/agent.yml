@@ -28,10 +28,13 @@
   when: cs_acquis is defined and cs_acquis | length > 0
   notify: crowdsec_restart
 
-- name: CS Agent - Generate IP allowlist
+# Reload should be sufficent, but can fail is crowdsec is not running due to reasons.
+# Temporary situation, change back to reload when everything is cleared up.
+- name: CS Agent - Generate IP default allowlist
   ansible.builtin.template:
-    src: templates/etc/crowdsec/allowlist.yaml.j2
-    dest: /etc/crowdsec/parsers/s02-enrich/allowlist.yaml
+    src: templates/etc/crowdsec/default_allowlist.yaml.j2
+    dest: /etc/crowdsec/parsers/s02-enrich/default_allowlist.yaml
     owner: root
     group: root
     mode: '0644'
+  notify: crowdsec_restart
