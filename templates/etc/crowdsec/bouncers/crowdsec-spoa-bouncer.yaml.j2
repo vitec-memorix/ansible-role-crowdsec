@@ -1,0 +1,30 @@
+#
+# {{ ansible_managed }}
+#
+
+## Log configuration
+log_mode: {{ item.log_mode | default('file') }}
+log_dir: {{ item.log_dir | default('/var/log/crowdsec-spoa/') }}
+log_level: {{ item.log_level | default('info') }}
+log_compression: {{ item.log_compression | default('true') }}
+log_max_size: {{ item.log_max_size | default('100') }}
+log_max_backups: {{ item.log_max_backups | default('3') }}
+log_max_age: {{ item.log_max_age | default('30') }}
+
+## LAPI configuration
+update_frequency: {{ item.update_frequency | default('10s') }}
+api_url: {{ cs_lapi_protocol }}://{{ cs_lapi_listen_uri }}
+api_key: {{ item.api_key | default('') }}
+insecure_skip_verify: {{ cs_lapi_skip_verify | default('false') }}
+
+## SPOA listener configuration
+# Configure TCP and/or Unix socket listeners
+listen_tcp: {{ item.listen_tcp | default('127.0.0.1:9000') }}
+listen_unix: {{ item.listen_unix | default('/run/crowdsec-spoa/spoa.sock') }}
+#asn_database_path: /var/lib/crowdsec/data/GeoLite2-ASN.mmdb
+#city_database_path: /var/lib/crowdsec/data/GeoLite2-City.mmdb
+
+prometheus:
+  enabled: {{ item.prometheus_enabled | default('false') }}
+  listen_addr: {{ item.prometheus_listen_addr | default('127.0.0.1') }}
+  listen_port: {{ item.prometheus_listen_port | default('60601') }}

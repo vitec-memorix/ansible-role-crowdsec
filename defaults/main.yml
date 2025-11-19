@@ -102,3 +102,13 @@ cs_prometheur_listen_port: '6060'
 #  site_key: ''
 #  captcha_template_path: '/var/lib/crowdsec/lua/haproxy/templates/captcha.html'
 #  captcha_expiration: '3600'
+
+# cs_haproxy_spoa_bouncer
+#   update_frequency: 10s
+#   api_key: 'YetAntoherVeryDifficultToBrakePasswordHere'
+#   insecure_skip_verify: false
+#   listen_tcp: 127.0.0.1:9000
+#   listen_unix: /run/crowdsec-spoa/spoa.sock
+#   prometheus_enabled: false
+#   prometheus_listen_addr: 127.0.0.1
+#   prometheus_listen_port: 60601
