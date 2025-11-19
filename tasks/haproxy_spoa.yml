@@ -1,0 +1,26 @@
+---
+- name: CS Haproxy SPOA Bouncer - Make sure /etc/crowdsec/bouncers it there
+  ansible.builtin.file:
+    path: /etc/crowdsec/bouncers
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: CS Haproxy SPOA Bouncer - Render configfile
+  ansible.builtin.template:
+    src: etc/crowdsec/bouncers/crowdsec-spoa-bouncer.yaml.j2
+    dest: /etc/crowdsec/bouncers/crowdsec-spoa-bouncer.yaml
+    mode: '0600'
+    owner: root
+    group: root
+  with_items: "{{ cs_haproxy_spoa_bouncer }}"
+  become: true
+
+- name: CS Haproxy SPOA Bouncer - Install Haproxy bouncer
+  ansible.builtin.package:
+    update_cache: false
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - crowdsec-haproxy-spoa-bouncer
+  become: true

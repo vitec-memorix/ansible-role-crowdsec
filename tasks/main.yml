@@ -63,3 +63,8 @@
   ansible.builtin.include_tasks:
     file: haproxy_bouncer.yml
   when: cs_haproxy_bouncer is defined and cs_haproxy_bouncer | length > 0
+
+- name: CS Haproxy SPOA Bouncer
+  ansible.builtin.include_tasks:
+    file: haproxy_spoa.yml
+  when: cs_haproxy_spoa_bouncer is defined and cs_haproxy_spoa_bouncer | length > 0
