@@ -21,8 +21,16 @@ insecure_skip_verify: {{ cs_lapi_skip_verify | default('false') }}
 # Configure TCP and/or Unix socket listeners
 listen_tcp: {{ item.listen_tcp | default('127.0.0.1:9000') }}
 listen_unix: {{ item.listen_unix | default('/run/crowdsec-spoa/spoa.sock') }}
+{% if item.asn_database is defined %}
+asn_database_path: {{ item.asn_database_path }}
+{% else %}
 #asn_database_path: /var/lib/crowdsec/data/GeoLite2-ASN.mmdb
+{% endif %}
+{% if item.city_database_path is defined %}
+city_database_path: {{ item.city_database_path }}
+{% else %}
 #city_database_path: /var/lib/crowdsec/data/GeoLite2-City.mmdb
+{% endif %}
 
 prometheus:
   enabled: {{ item.prometheus_enabled | default('false') }}
