@@ -10,9 +10,9 @@
   ansible.builtin.template:
     src: etc/crowdsec/bouncers/crowdsec-spoa-bouncer.yaml.j2
     dest: /etc/crowdsec/bouncers/crowdsec-spoa-bouncer.yaml
-    mode: '0600'
+    mode: '0640'
     owner: root
-    group: root
+    group: crowdsec-spoa
   with_items: "{{ cs_haproxy_spoa_bouncer }}"
   become: true
 
