@@ -14,7 +14,9 @@
     mode: '0755'
     owner: root
     group: root
-  when: cs_acquis is defined and cs_acquis | length > 0
+  when: >
+    (cs_acquis is defined and cs_acquis | length > 0) or
+    (cs_appsec is defined and cs_appsec | length > 0)
 
 - name: CS Agent - Generate acquis file(s)
   ansible.builtin.template:
@@ -26,6 +28,20 @@
     backup: false
   with_items: "{{ cs_acquis }}"
   when: cs_acquis is defined and cs_acquis | length > 0
+  notify: crowdsec_restart
+
+- name: CS Agent - AppSec acquisition file(s)
+  ansible.builtin.template:
+    src: templates/etc/crowdsec/acquis.d/appsec.yaml.j2
+    dest: "/etc/crowdsec/acquis.d/appsec_{{ item.name | default('instance' ~ (appsec_idx | string), true) }}.yaml"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: false
+  loop: "{{ cs_appsec | default([]) }}"
+  loop_control:
+    index_var: appsec_idx
+  when: cs_appsec is defined and cs_appsec | length > 0
   notify: crowdsec_restart
 
 # Reload should be sufficent, but can fail is crowdsec is not running due to reasons.

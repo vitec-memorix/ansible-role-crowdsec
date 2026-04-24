@@ -56,6 +56,23 @@ cs_profiles:
 #     filenames:
 #       - /var/log/haproxy*.log
 #     type: haproxy
+#
+# AppSec (WAF) on the agent: optional acquisition(s) in acquis.d (source: appsec).
+# Install the hub collection that provides the referenced appsec-configs, e.g.:
+#   cs_collections_install: [ "crowdsecurity/appsec" ]
+# cs_appsec:
+#   - name: myAppSec
+#     listen_addr: 127.0.0.1:7422
+#     path: /
+#     appsec_configs:
+#       - crowdsecurity/appsec-default
+#     # labels:  # optional; default adds type: appsec
+#     #   type: appsec
+#     # routines: 1
+#     # auth_cache_duration: 1m
+#     # cert_file: /etc/crowdsec/ssl/appsec.crt
+#     # key_file: /etc/crowdsec/ssl/appsec.key
+cs_appsec: []
 
 cs_parsers_mywhitelists_cidr:
   - 127.0.0.0/8
