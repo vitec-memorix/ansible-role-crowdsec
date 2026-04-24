@@ -1,0 +1,29 @@
+#
+# {{ ansible_managed }} — AppSec (Application Security Component) acquisition
+# See https://doc.crowdsec.net/docs/log_processor/data_sources/appsec
+#
+source: appsec
+{% if item.name is defined and item.name %}
+name: {{ item.name }}
+{% endif %}
+listen_addr: {{ item.listen_addr | default('127.0.0.1:7422') }}
+path: {{ item.path | default('/') }}
+appsec_configs:
+{% for c in item.appsec_configs %}
+  - {{ c }}
+{% endfor %}
+{% if item.routines is defined %}
+routines: {{ item.routines }}
+{% endif %}
+{% if item.auth_cache_duration is defined %}
+auth_cache_duration: {{ item.auth_cache_duration }}
+{% endif %}
+{% if item.cert_file is defined and item.cert_file %}
+cert_file: {{ item.cert_file }}
+{% endif %}
+{% if item.key_file is defined and item.key_file %}
+key_file: {{ item.key_file }}
+{% endif %}
+{% set _labels = {'type': 'appsec'} | combine(item.labels | default({})) %}
+labels:
+{{ _labels | to_nice_yaml(indent=2) | indent(2, first=True) }}
